@@ -8,6 +8,8 @@
         <footer>Adolf Hitler</footer>
     </blockquote>
 
+    <button class="btn btn-primary" data-bind="click: saveReservation, enable: seats().length > 0">Save reservation</button>
+
     <table class="table table-striped table-bordered table-hover table-condensed">
     <thead><tr>
             <th>Passenger name</th><th>Meal</th><th>Surcharge</th><th></th>
@@ -23,9 +25,21 @@
         </tbody>
     </table>
 
-    <button class="btn btn-primary" data-bind="click: addSeat, enable: seats().length < 5">Reserve another seat</button>
+    <button class="btn btn-primary" data-bind="click: addSeat, enable: seats().length < 5">Add a seat</button>
+    <span class="form-group" data-bind="visible: seats().length == 0">or
+        <button class="btn btn-primary"
+            data-bind="click: loadReservation, enable: reservationCode().length > 3 && reservationCode().length < 5">Load a reservation</button>
+        <input class="form-control" placeholder="Reservation-Code (vier Ziffern)" data-bind="value: reservationCode, valueUpdate:'afterkeydown'"/>
+    </span>
 
-    <h3 data-bind="visible: totalSurcharge() > 0">
+    <!--<form class="form-inline" role="form">
+        <button class="btn btn-primary" type="submit">Load a reservation</button>
+        <div class="form-group">
+            <input class="form-control">
+        </div>
+    </form> -->
+
+    <h3 data-bind="fadeVisible: totalSurcharge() > 0">
         Total surcharge: $<span data-bind="text: totalSurcharge().toFixed(2)"></span>
     </h3>
 }
